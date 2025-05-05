@@ -78,3 +78,15 @@ class FileSystem:
         temp_cursor.execute(f"DROP DATABASE IF EXISTS {db_name}")
         temp_db.close()
         print(f"Database '{db_name}' dropped.")
+
+    def clear_all_tables(self):
+        try:
+            self.mycursor.execute("DELETE FROM car_accidents")
+            self.mycursor.execute("DELETE FROM accidents")
+            self.mycursor.execute("DELETE FROM cars")
+            self.mycursor.execute("DELETE FROM customers")
+            self.mydb.commit()
+            print("All records deleted from all tables.")
+        except Exception as e:
+            self.mydb.rollback()
+            print(f"Error clearing tables: {e}")

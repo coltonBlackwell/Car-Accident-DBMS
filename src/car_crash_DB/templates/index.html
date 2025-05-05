@@ -11,7 +11,7 @@
 
     <!--Adding Car-->
 
-    <h2>Complete the Form to add a record!</h2>
+    <h2>Add Record</h2>
 
     <form method="POST">
         <h3>User</h3>
@@ -46,34 +46,107 @@
     
         <button type="submit" name="submit_all">Submit All</button>
     </form>
+
+    <form method="POST">
+        <h2>Remove Record</h2>
+        <label for="remove_driver_id">Driver ID:</label>
+        <input type="text" name="remove_driver_id" required>
+    
+        <button type="submit" name="remove_report">Remove Report</button>
+    </form>
+
+    <form method="POST">
+        <button type="submit" name="drop_database">Remove all Records</button>
+    </form>
+
+
     
     {% if message %}
         <p class="message">{{ message }}</p>
     {% endif %}
 
-    <h2>Database Display</h2>
+    <h2>All Records Combined</h2>
+
+    <table border="1">
+        <tr>
+            <th>Driver ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>License</th>
+            <th>Car Model</th>
+            <th>Year</th>
+            <th>Report #</th>
+            <th>Location</th>
+            <th>Date</th>
+        </tr>
+        {% for r in full_records %}
+        <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] }}</td>
+            <td>{{ r[4] }}</td>
+            <td>{{ r[5] }}</td>
+            <td>{{ r[6] }}</td>
+            <td>{{ r[7] }}</td>
+            <td>{{ r[8] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+    <h2>Database Tables Display</h2>
 
     <h3>People</h3>
-        <ul>
-            {% for p in people %}
-                <li>ID: {{ p[0] }}, Name: {{ p[1] }}, Address: {{ p[2] }}</li>
-            {% endfor %}
-        </ul>
+    <table border="1">
+        <tr>
+            <th>Driver ID</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+        {% for p in people %}
+        <tr>
+            <td>{{ p[0] }}</td>
+            <td>{{ p[1] }}</td>
+            <td>{{ p[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-        <h3>Cars</h3>
-        <ul>
-            {% for c in cars %}
-                <li>License: {{ c[0] }}, Model: {{ c[1] }}, Year: {{ c[2] }}, Driver ID: {{ c[3] }}</li>
-            {% endfor %}
-        </ul>
+    <h3>Cars</h3>
+    <table border="1">
+        <tr>
+            <th>License</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Driver ID</th>
+        </tr>
+        {% for c in cars %}
+        <tr>
+            <td>{{ c[0] }}</td>
+            <td>{{ c[1] }}</td>
+            <td>{{ c[2] }}</td>
+            <td>{{ c[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-        <h3>Accidents</h3>
-        <ul>
-            {% for a in accidents %}
-                <li>Report #: {{ a[0] }}, Location: {{ a[1] }}, Date: {{ a[2] }}</li>
-            {% endfor %}
-        </ul>
-
+    <h3>Accidents</h3>
+    <table border="1">
+        <tr>
+            <th>Report #</th>
+            <th>Location</th>
+            <th>Date</th>
+        </tr>
+        {% for a in accidents %}
+        <tr>
+            <td>{{ a[0] }}</td>
+            <td>{{ a[1] }}</td>
+            <td>{{ a[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
 </body>
 </html>
