@@ -1,6 +1,9 @@
-# Car Crash DBMS Simulator 🚙🔧💨
+# Car Accident DBMS Simulator 🚙🔧💨
 
 ![ER Diagram](images/ER_Diagram_Inspo.png)
+
+<p align="center"><em>ER diagram representing Car Accident DB</em></p>
+
 
 ## Overview
 
