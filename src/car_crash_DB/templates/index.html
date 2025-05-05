@@ -5,148 +5,231 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accident Sim</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <h1>Car Crash DataBase Sim 🚙🔧💨</h1>
+    <div class="container">
+        <header class="app-header">
+            <h1></i> Car Crash DataBase Sim <span class="emoji-sequence">🚙🔧💨</span></h1>
+            <div class="header-decoration"></div>
+        </header>
 
-    <!--Adding Car-->
+        <main class="dashboard">
+            <section class="card form-section">
+                <div class="card-header">
+                    <h2><i class="fas fa-plus-circle"></i> Add Record</h2>
+                </div>
+                <form method="POST" class="multi-section-form">
+                    <div class="form-group">
+                        <h3><i class="fas fa-user"></i> User</h3>
+                        <div class="input-group">
+                            <label for="person_driver_id"></i> Driver ID:</label>
+                            <input type="text" name="person_driver_id" required placeholder="Enter driver ID">
+                        </div>
+                        <div class="input-group">
+                            <label for="person_name"></i> Name:</label>
+                            <input type="text" name="person_name" required placeholder="Enter full name">
+                        </div>
+                        <div class="input-group">
+                            <label for="person_address"></i> Address:</label>
+                            <input type="text" name="person_address" required placeholder="Enter address">
+                        </div>
+                    </div>
 
-    <h2>Add Record</h2>
+                    <div class="form-group">
+                        <h3><i class="fas fa-car"></i> Car</h3>
+                        <div class="input-group">
+                            <label for="car_license"></i> Car License:</label>
+                            <input type="text" name="car_license" required placeholder="Enter license plate">
+                        </div>
+                        <div class="input-group">
+                            <label for="car_model"></i> Car Model:</label>
+                            <input type="text" name="car_model" required placeholder="Enter model">
+                        </div>
+                        <div class="input-group">
+                            <label for="car_year"></i> Car Year:</label>
+                            <input type="text" name="car_year" required placeholder="Enter year">
+                        </div>
+                    </div>
 
-    <form method="POST">
-        <h3>User</h3>
-        <label for="person_driver_id">Driver ID:</label>
-        <input type="text" name="person_driver_id" required>
-    
-        <label for="person_name">Name:</label>
-        <input type="text" name="person_name" required>
-    
-        <label for="person_address">Address:</label>
-        <input type="text" name="person_address" required>
-    
-        <h3>Car</h3>
-        <label for="car_license">Car License:</label>
-        <input type="text" name="car_license" required>
-    
-        <label for="car_model">Car Model:</label>
-        <input type="text" name="car_model" required>
-    
-        <label for="car_year">Car Year:</label>
-        <input type="text" name="car_year" required>
-    
-        <h3>Accident</h3>
-        <label for="accident_report_number">Report Number:</label>
-        <input type="text" name="accident_report_number" required>
-    
-        <label for="accident_location">Location:</label>
-        <input type="text" name="accident_location" required>
-    
-        <label for="accident_date">Date:</label>
-        <input type="text" name="accident_date" required>
-    
-        <button type="submit" name="submit_all">Submit All</button>
-    </form>
+                    <div class="form-group">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Accident</h3>
+                        <div class="input-group">
+                            <label for="accident_report_number"></i> Report Number:</label>
+                            <input type="text" name="accident_report_number" required placeholder="Enter report #">
+                        </div>
+                        <div class="input-group">
+                            <label for="accident_location"></i> Location:</label>
+                            <input type="text" name="accident_location" required placeholder="Enter location">
+                        </div>
+                        <div class="input-group">
+                            <label for="accident_date"></i> Date:</label>
+                            <input type="text" name="accident_date" required placeholder="YYYY-MM-DD">
+                        </div>
+                    </div>
 
-    <form method="POST">
-        <h2>Remove Record</h2>
-        <label for="remove_driver_id">Driver ID:</label>
-        <input type="text" name="remove_driver_id" required>
-    
-        <button type="submit" name="remove_report">Remove Report</button>
-    </form>
+                    <button type="submit" name="submit_all" class="btn-primary">
+                        <i class="fas fa-save"></i> Submit All
+                    </button>
+                </form>
+            </section>
 
-    <form method="POST">
-        <button type="submit" name="drop_database">Remove all Records</button>
-    </form>
+            <section class="card-group">
+                <div class="card danger-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-minus-circle"></i> Remove Record</h2>
+                    </div>
+                    <form method="POST">
+                        <div class="input-group">
+                            <label for="remove_driver_id"><i class="fas fa-id-card"></i> Driver ID:</label>
+                            <input type="text" name="remove_driver_id" required placeholder="Enter driver ID to remove">
+                        </div>
+                        <button type="submit" name="remove_report" class="btn-warning">
+                            <i class="fas fa-trash-alt"></i> Remove Report
+                        </button>
+                    </form>
+                </div>
 
+                <div class="card danger-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-radiation"></i> Nuclear Option</h2>
+                    </div>
+                    <form method="POST">
+                        <button type="submit" name="drop_database" class="btn-danger">
+                            <i class="fas fa-skull-crossbones"></i> Remove all Records
+                        </button>
+                    </form>
+                </div>
+            </section>
 
-    
-    {% if message %}
-        <p class="message">{{ message }}</p>
-    {% endif %}
+            {% if message %}
+                <div class="alert-message">
+                    <p class="message"><i class="fas fa-info-circle"></i> {{ message }}</p>
+                </div>
+            {% endif %}
 
-    <h2>All Records Combined</h2>
+            <section class="card data-section">
+                <div class="card-header">
+                    <h2><i class="fas fa-table"></i> Records</h2>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-id-card"></i> Driver ID</th>
+                                <th><i class="fas fa-user"></i> Name</th>
+                                <th><i class="fas fa-map-marker-alt"></i> Address</th>
+                                <th><i class="fas fa-file-alt"></i> License</th>
+                                <th><i class="fas fa-car-side"></i> Car Model</th>
+                                <th><i class="fas fa-calendar-alt"></i> Year</th>
+                                <th><i class="fas fa-file-contract"></i> Report #</th>
+                                <th><i class="fas fa-map-pin"></i> Location</th>
+                                <th><i class="fas fa-clock"></i> Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in full_records %}
+                            <tr>
+                                <td>{{ r[0] }}</td>
+                                <td>{{ r[1] }}</td>
+                                <td>{{ r[2] }}</td>
+                                <td>{{ r[3] }}</td>
+                                <td>{{ r[4] }}</td>
+                                <td>{{ r[5] }}</td>
+                                <td>{{ r[6] }}</td>
+                                <td>{{ r[7] }}</td>
+                                <td>{{ r[8] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-    <table border="1">
-        <tr>
-            <th>Driver ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>License</th>
-            <th>Car Model</th>
-            <th>Year</th>
-            <th>Report #</th>
-            <th>Location</th>
-            <th>Date</th>
-        </tr>
-        {% for r in full_records %}
-        <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td>{{ r[4] }}</td>
-            <td>{{ r[5] }}</td>
-            <td>{{ r[6] }}</td>
-            <td>{{ r[7] }}</td>
-            <td>{{ r[8] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <section class="card data-section">
+                <div class="card-header">
+                    <h2><i class="fas fa-database"></i> Database Tables</h2>
+                </div>
 
+                <div class="sub-section">
+                    <h3><i class="fas fa-users"></i> People</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-id-card"></i> Driver ID</th>
+                                    <th><i class="fas fa-user"></i> Name</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in people %}
+                                <tr>
+                                    <td>{{ p[0] }}</td>
+                                    <td>{{ p[1] }}</td>
+                                    <td>{{ p[2] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
+                <div class="sub-section">
+                    <h3><i class="fas fa-car"></i> Cars</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-file-alt"></i> License</th>
+                                    <th><i class="fas fa-car-side"></i> Model</th>
+                                    <th><i class="fas fa-calendar-alt"></i> Year</th>
+                                    <th><i class="fas fa-id-card"></i> Driver ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in cars %}
+                                <tr>
+                                    <td>{{ c[0] }}</td>
+                                    <td>{{ c[1] }}</td>
+                                    <td>{{ c[2] }}</td>
+                                    <td>{{ c[3] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-    <h2>Database Tables Display</h2>
+                <div class="sub-section">
+                    <h3><i class="fas fa-car-crash"></i> Accidents</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-file-contract"></i> Report #</th>
+                                    <th><i class="fas fa-map-pin"></i> Location</th>
+                                    <th><i class="fas fa-clock"></i> Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a in accidents %}
+                                <tr>
+                                    <td>{{ a[0] }}</td>
+                                    <td>{{ a[1] }}</td>
+                                    <td>{{ a[2] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-    <h3>People</h3>
-    <table border="1">
-        <tr>
-            <th>Driver ID</th>
-            <th>Name</th>
-            <th>Address</th>
-        </tr>
-        {% for p in people %}
-        <tr>
-            <td>{{ p[0] }}</td>
-            <td>{{ p[1] }}</td>
-            <td>{{ p[2] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h3>Cars</h3>
-    <table border="1">
-        <tr>
-            <th>License</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>Driver ID</th>
-        </tr>
-        {% for c in cars %}
-        <tr>
-            <td>{{ c[0] }}</td>
-            <td>{{ c[1] }}</td>
-            <td>{{ c[2] }}</td>
-            <td>{{ c[3] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h3>Accidents</h3>
-    <table border="1">
-        <tr>
-            <th>Report #</th>
-            <th>Location</th>
-            <th>Date</th>
-        </tr>
-        {% for a in accidents %}
-        <tr>
-            <td>{{ a[0] }}</td>
-            <td>{{ a[1] }}</td>
-            <td>{{ a[2] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
+    <footer class="app-footer" style="text-align: center; padding: 1rem;">
+        <p>Accident Database Simulation &copy; 2025 | Colton Blackwell</p>
+    </footer>
 </body>
 </html>
