@@ -1,4 +1,4 @@
-# Car Crash DataBase Sim 🚙🔧💨
+# Car Crash DBMS Simulator 🚙🔧💨
 
 ![ER Diagram](images/ER_Diagram_Inspo.png)
 
