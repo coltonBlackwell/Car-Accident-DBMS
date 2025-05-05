@@ -1,22 +1,25 @@
 import mysql.connector
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class FileSystem: 
     def __init__(self):
         temp_db = mysql.connector.connect(
-            host=os.environ.get("MYSQL_HOST", "localhost"),
-            user="colton",
-            password=os.environ.get("MYSQL_PASSWORD", "good4Colton!")
+            host=os.environ.get("MYSQL_HOST"),
+            user=os.environ.get("MYSQL_USER"),
+            password=os.environ.get("MYSQL_PASSWORD")
         )
         temp_cursor = temp_db.cursor()
         temp_cursor.execute("CREATE DATABASE IF NOT EXISTS car_accidents")
         temp_db.close()
 
         self.mydb = mysql.connector.connect(
-            host=os.environ.get("MYSQL_HOST", "localhost"),
-            user="colton",
-            password=os.environ.get("MYSQL_PASSWORD", "good4Colton!"),
-            database=os.environ.get("MYSQL_DB", "car_accidents")
+            host=os.environ.get("MYSQL_HOST"),
+            user=os.environ.get("MYSQL_USER"),
+            password=os.environ.get("MYSQL_PASSWORD"),
+            database=os.environ.get("MYSQL_DB")
         )
         self.mycursor = self.mydb.cursor()
         print("Connected to DB:", self.mydb)

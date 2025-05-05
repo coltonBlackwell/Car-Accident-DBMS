@@ -8,3 +8,4 @@ phpmyadmin==0.0.1
 requests==2.32.3
 termcolor==2.4.0
 urllib3==2.2.3
+dotenv
