@@ -30,7 +30,18 @@ class FileSystem:
             )
         """)
         self.mydb.commit()
+
+    def create_cars_table(self):
+        self.mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS cars (
+                license INT PRIMARY KEY, 
+                model VARCHAR(255),
+                year INT
+            )        
+        """)
+        self.mydb.commit()
         
+    
 class Person:
 
     def __init__(self, driver_id, name, address):
@@ -38,20 +49,27 @@ class Person:
         self.name = name
         self.address = address
 
-        mycursor = mydb.cursor()
-
-        mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
-
-
+    def save_to_db(self, db_cursor):
+        db_cursor.execute("""
+            INSERT INTO customers (driver_id, name, address)
+            VALUES (%s, %s, %s)
+        """, (self.driver_id, self.name, self.address))
 
     def __str__(self):
         return f"{self.driver_id} - {self.name} - {self.address}"
+
     
 class Car:
     def __init__(self, license, model, year):
         self.license = license
         self.model = model
         self.year = year
+
+    def save_to_db(self, db_cursor):
+        db_cursor.execute("""
+            INSERT INTO cars (license, model, year)
+            VALUES (%s, %s, %s)
+        """, (self.license, self.model, self.year))
 
     def __str__(self):
         return f"{self.license} - {self.model} - {self.year}"
@@ -66,8 +84,20 @@ class Accident:
         return f"{self.report_number} - {self.location} - {self.date}"
 
 def main():
-    colton = Person(21, "Colton", "422 montroyal Blvd.")
-    print(colton)
+
+    fs = FileSystem()
+    fs.create_person_table()
+    fs.create_cars_table()
+
+    # colton = Person(21, "Colton", "422 montroyal Blvd.")
+    # colton.save_to_db(fs.mycursor)
+    # fs.mydb.commit()
+    # print("Person saved:", colton)
+
+    camero = Car(11111, "Camero", 2025)
+    camero.save_to_db(fs.mycursor)
+    fs.mydb.commit()
+    print("Car saved: ", camero)
 
 
 if __name__ == '__main__':
