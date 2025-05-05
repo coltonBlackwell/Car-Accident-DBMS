@@ -40,6 +40,16 @@ class FileSystem:
             )        
         """)
         self.mydb.commit()
+
+    def create_accidents_table(self):
+        self.mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS accidents (
+                report_number INT PRIMARY KEY, 
+                location VARCHAR(255),
+                date DATE
+            )        
+        """)
+        self.mydb.commit()
         
     
 class Person:
@@ -80,6 +90,12 @@ class Accident:
         self.location = location
         self.date = date
 
+    def save_to_db(self, db_cursor):
+        db_cursor.execute("""
+            INSERT INTO accidents (report_number, location, date)
+            VALUES (%s, %s, %s)
+        """, (self. report_number, self.location, self.date))
+
     def __str__(self):
         return f"{self.report_number} - {self.location} - {self.date}"
 
@@ -88,16 +104,22 @@ def main():
     fs = FileSystem()
     fs.create_person_table()
     fs.create_cars_table()
+    fs.create_accidents_table()
 
     # colton = Person(21, "Colton", "422 montroyal Blvd.")
     # colton.save_to_db(fs.mycursor)
     # fs.mydb.commit()
     # print("Person saved:", colton)
 
-    camero = Car(11111, "Camero", 2025)
-    camero.save_to_db(fs.mycursor)
+    # camero = Car(11111, "Camero", 2025)
+    # camero.save_to_db(fs.mycursor)
+    # fs.mydb.commit()
+    # print("Car saved: ", camero)
+
+    head_on_collision = Accident(212, "Edgemont Village", '2010-08-11')
+    head_on_collision.save_to_db(fs.mycursor)
     fs.mydb.commit()
-    print("Car saved: ", camero)
+    print("Accident reported: ", head_on_collision)
 
 
 if __name__ == '__main__':
