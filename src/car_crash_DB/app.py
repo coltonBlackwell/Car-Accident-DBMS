@@ -11,7 +11,6 @@ fs.create_accidents_table()
 fs.create_car_accidents_table()
 
 
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     message = ""
@@ -43,7 +42,6 @@ def index():
                 accident.save_to_db(fs.mycursor)
                 fs.mydb.commit()
 
-                # Link car to accident
                 car.link_to_accident(fs.mycursor, accident.report_number)
 
                 fs.mydb.commit()
@@ -63,15 +61,13 @@ def index():
 
             message = f"Record featuring driver ID: {driver_id} removed from the database"
 
-            #use method that removes record based on driver_id
         elif "drop_database" in request.form:
 
-            fs.clear_all_tables()  # Drops the database
+            fs.clear_all_tables()
 
             message = "Removed all records"
         
 
-    # ✅ This is outside the POST block, so it runs for both GET and POST
     fs.mycursor.execute("SELECT * FROM customers")
     people = fs.mycursor.fetchall()
 
@@ -95,8 +91,6 @@ def index():
     full_records = fs.mycursor.fetchall()
 
     return render_template("index.html", message=message, people=people, cars=cars, accidents=accidents, full_records=full_records)
-
-    # fs.drop_database()  # Drops the database
 
 if __name__ == '__main__':
     app.run(debug=True)
