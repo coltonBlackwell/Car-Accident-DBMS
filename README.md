@@ -76,13 +76,13 @@ Ensure you have the following installed:
 
 4. **Configure Environment Variables:**
 
-    Verify or update the database settings in the provided [`.env`](.env) file:
+    Update the database settings in the provided [`.env`](.env) file:
 
     ```
-    MYSQL_HOST=localhost
-    MYSQL_USER=colton
-    MYSQL_PASSWORD=good4Colton!
-    MYSQL_DB=car_accidents
+    MYSQL_HOST=__
+    MYSQL_USER=__
+    MYSQL_PASSWORD=__
+    MYSQL_DB=__
     ```
 
 5. **Database Setup:**
