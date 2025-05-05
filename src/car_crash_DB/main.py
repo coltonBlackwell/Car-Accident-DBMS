@@ -36,8 +36,25 @@ class FileSystem:
             CREATE TABLE IF NOT EXISTS cars (
                 license INT PRIMARY KEY, 
                 model VARCHAR(255),
-                year INT
+                year INT, 
+                driver_id INT, 
+                FOREIGN KEY (driver_id) REFERENCES customers(driver_id)
+                    ON DELETE CASCADE
             )        
+        """)
+        self.mydb.commit()
+
+    def create_car_accidents_table(self):
+        self.mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS car_accidents (
+                report_number INT,
+                license INT,
+                PRIMARY KEY (report_number, license),
+                FOREIGN KEY (report_number) REFERENCES accidents(report_number)
+                    ON DELETE CASCADE,
+                FOREIGN KEY (license) REFERENCES cars(license)
+                    ON DELETE CASCADE
+            )
         """)
         self.mydb.commit()
 
@@ -50,6 +67,17 @@ class FileSystem:
             )        
         """)
         self.mydb.commit()
+
+    def drop_database(self, db_name="car_accidents"):
+        temp_db = mysql.connector.connect(
+            host=os.environ.get("MYSQL_HOST", "localhost"),
+            user="colton",
+            password=os.environ.get("MYSQL_PASSWORD", "good4Colton!")
+        )
+        temp_cursor = temp_db.cursor()
+        temp_cursor.execute(f"DROP DATABASE IF EXISTS {db_name}")
+        temp_db.close()
+        print(f"Database '{db_name}' dropped.")
         
     
 class Person:
@@ -70,16 +98,17 @@ class Person:
 
     
 class Car:
-    def __init__(self, license, model, year):
+    def __init__(self, license, model, year, driver_id):
         self.license = license
         self.model = model
         self.year = year
+        self.driver_id = driver_id
 
     def save_to_db(self, db_cursor):
         db_cursor.execute("""
-            INSERT INTO cars (license, model, year)
-            VALUES (%s, %s, %s)
-        """, (self.license, self.model, self.year))
+            INSERT INTO cars (license, model, year, driver_id)
+            VALUES (%s, %s, %s, %s)
+        """, (self.license, self.model, self.year, self.driver_id))
 
     def __str__(self):
         return f"{self.license} - {self.model} - {self.year}"
@@ -105,22 +134,26 @@ def main():
     fs.create_person_table()
     fs.create_cars_table()
     fs.create_accidents_table()
+    fs.create_car_accidents_table()
 
-    # colton = Person(21, "Colton", "422 montroyal Blvd.")
-    # colton.save_to_db(fs.mycursor)
-    # fs.mydb.commit()
-    # print("Person saved:", colton)
+    colton = Person(21, "Colton", "422 montroyal Blvd.")
+    colton.save_to_db(fs.mycursor)
+    fs.mydb.commit()
+    print("Person saved:", colton)
 
-    # camero = Car(11111, "Camero", 2025)
-    # camero.save_to_db(fs.mycursor)
-    # fs.mydb.commit()
-    # print("Car saved: ", camero)
+    camero = Car(11111, "Camero", 2025, 21) # 21 => Colton's ID
+    camero.save_to_db(fs.mycursor)
+    fs.mydb.commit()
+    print("Car saved: ", camero)
 
     head_on_collision = Accident(212, "Edgemont Village", '2010-08-11')
     head_on_collision.save_to_db(fs.mycursor)
     fs.mydb.commit()
     print("Accident reported: ", head_on_collision)
 
+    
+
+    # fs.drop_database()  # Drops the database
 
 if __name__ == '__main__':
     main()
