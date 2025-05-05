@@ -110,6 +110,12 @@ class Car:
             VALUES (%s, %s, %s, %s)
         """, (self.license, self.model, self.year, self.driver_id))
 
+    def link_to_accident(self, db_cursor, report_number):
+        db_cursor.execute("""
+            INSERT INTO car_accidents (report_number, license)
+            VALUES (%s, %s)
+        """, (report_number, self.license))
+
     def __str__(self):
         return f"{self.license} - {self.model} - {self.year}"
     
@@ -138,20 +144,26 @@ def main():
 
     colton = Person(21, "Colton", "422 montroyal Blvd.")
     colton.save_to_db(fs.mycursor)
-    fs.mydb.commit()
-    print("Person saved:", colton)
 
-    camero = Car(11111, "Camero", 2025, 21) # 21 => Colton's ID
+    camero = Car(11111, "Camero", 2025, 21)
     camero.save_to_db(fs.mycursor)
-    fs.mydb.commit()
-    print("Car saved: ", camero)
 
     head_on_collision = Accident(212, "Edgemont Village", '2010-08-11')
     head_on_collision.save_to_db(fs.mycursor)
-    fs.mydb.commit()
-    print("Accident reported: ", head_on_collision)
 
-    
+    # Commit all inserts before linking
+    fs.mydb.commit()
+
+    # Automatically link the car and accident
+    camero.link_to_accident(fs.mycursor, 212)
+    fs.mydb.commit()
+    print("Car-Accident relationship recorded.")
+
+    print("Person saved:", colton)
+    print("Car saved:", camero)
+    print("Accident reported:", head_on_collision)
+
+
 
     # fs.drop_database()  # Drops the database
 
