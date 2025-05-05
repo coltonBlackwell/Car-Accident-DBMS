@@ -53,30 +53,17 @@ def index():
             fs.mydb.rollback()
             message = f"Something went wrong: {str(e)}"
 
-    return render_template("index.html", message=message)
+    # ✅ This is outside the POST block, so it runs for both GET and POST
+    fs.mycursor.execute("SELECT * FROM customers")
+    people = fs.mycursor.fetchall()
 
+    fs.mycursor.execute("SELECT * FROM cars")
+    cars = fs.mycursor.fetchall()
 
-    # colton = Person(21, "Colton", "422 montroyal Blvd.")
-    # colton.save_to_db(fs.mycursor)
+    fs.mycursor.execute("SELECT * FROM accidents")
+    accidents = fs.mycursor.fetchall()
 
-    # camero = Car(11111, "Camero", 2025, 21)
-    # camero.save_to_db(fs.mycursor)
-
-    # head_on_collision = Accident(212, "Edgemont Village", '2010-08-11')
-    # head_on_collision.save_to_db(fs.mycursor)
-
-    # # Commit all inserts before linking
-    # fs.mydb.commit()
-
-    # # Automatically link the car and accident
-    # camero.link_to_accident(fs.mycursor, 212)
-    # fs.mydb.commit()
-    # print("Car-Accident relationship recorded.")
-
-    # print("Person saved:", colton)
-    # print("Car saved:", camero)
-    # print("Accident reported:", head_on_collision)
-
+    return render_template("index.html", message=message, people=people, cars=cars, accidents=accidents)
 
     # fs.drop_database()  # Drops the database
 

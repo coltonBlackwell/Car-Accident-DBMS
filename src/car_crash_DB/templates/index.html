@@ -34,9 +34,6 @@
         <label for="car_year">Car Year:</label>
         <input type="text" name="car_year" required>
     
-        <!-- <label for="car_driver_id">Car Driver ID:</label>
-        <input type="text" name="car_driver_id" required> -->
-    
         <h3>Accident</h3>
         <label for="accident_report_number">Report Number:</label>
         <input type="text" name="accident_report_number" required>
@@ -54,12 +51,28 @@
         <p class="message">{{ message }}</p>
     {% endif %}
 
-    <h2>Cars in Stock:</h2>
-    <ul>
-        {% for car in cars %}
-            <li>ID: {{ car[0] }} | Name: {{ car[1] }} | Price: ${{ car[2] }}</li>
-        {% endfor %}
-    </ul>
+    <h2>Database Display</h2>
+
+    <h3>People</h3>
+        <ul>
+            {% for p in people %}
+                <li>ID: {{ p[0] }}, Name: {{ p[1] }}, Address: {{ p[2] }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Cars</h3>
+        <ul>
+            {% for c in cars %}
+                <li>License: {{ c[0] }}, Model: {{ c[1] }}, Year: {{ c[2] }}, Driver ID: {{ c[3] }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Accidents</h3>
+        <ul>
+            {% for a in accidents %}
+                <li>Report #: {{ a[0] }}, Location: {{ a[1] }}, Date: {{ a[2] }}</li>
+            {% endfor %}
+        </ul>
 
 
 </body>
