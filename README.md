@@ -129,5 +129,5 @@ This project is licensed under the MIT License – see the [LICENSE](LICENSE) fi
 
 ## Learn More
 
-▶️ Check it out on [Youtube](https://youtu.be/0_Nwg2h4dlI)!\
+▶️ Check it out on [Youtube](https://youtu.be/0_Nwg2h4dlI)!
 <!-- 🧑‍💻 Read more about it on my [website](https://coltonblackwell.github.io/story_gen.html)! -->
