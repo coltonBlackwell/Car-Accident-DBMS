@@ -8,4 +8,5 @@ phpmyadmin==0.0.1
 requests==2.32.3
 termcolor==2.4.0
 urllib3==2.2.3
-dotenv
+Flask==3.0.3
+python-dotenv==1.0.1
