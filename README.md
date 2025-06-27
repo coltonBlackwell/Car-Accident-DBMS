@@ -2,10 +2,9 @@
 ▶️ Check it out on [Youtube](https://youtu.be/0_Nwg2h4dlI)!
 
 ![ER Diagram](images/ER_Diagram_Inspo.png)
-![Image](images/images.png)
-
 <p align="center"><em>ER diagram representing Car Accident DB</em></p>
-s
+
+![Image](images/image.png)
 
 ## Overview
 
