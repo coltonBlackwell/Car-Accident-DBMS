@@ -93,4 +93,4 @@ def index():
     return render_template("index.html", message=message, people=people, cars=cars, accidents=accidents, full_records=full_records)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=False)
